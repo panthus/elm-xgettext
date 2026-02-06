@@ -23,7 +23,7 @@ parser =
                 [ Parser.succeed (\s -> Parser.Loop (s :: result))
                     |= entry
                     |. Parser.spaces
-                , Parser.succeed ()
+                , Parser.end
                     |> Parser.map (\_ -> Parser.Done (List.reverse result))
                 ]
         )
@@ -105,6 +105,10 @@ string =
                         |> Parser.map (\_ -> Parser.Loop (result ++ "\""))
                     , Parser.symbol "\""
                         |> Parser.map (\_ -> Parser.Done result)
+                    , Parser.symbol "\\\\"
+                        |> Parser.map (\_ -> Parser.Loop (result ++ "\\\\"))
+                    , Parser.symbol "\\"
+                        |> Parser.map (\_ -> Parser.Loop (result ++ "\\"))
                     , Parser.chompWhile (\char -> char /= '\\' && char /= '"')
                         |> Parser.getChompedString
                         |> Parser.map (\s -> Parser.Loop (result ++ s))
