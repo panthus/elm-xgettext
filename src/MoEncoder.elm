@@ -113,16 +113,20 @@ toTranslationString poEntry =
 
 toStringsTable : Int -> List { a | length : Int } -> ( Int, List Encode.Encoder )
 toStringsTable initialOffset strings =
-    strings
-        |> List.foldl
-            (\entry ( offset, result ) ->
-                -- Note + 1 because NUL byte not included in length
-                ( offset + entry.length + 1
-                , Encode.sequence
-                    [ Encode.unsignedInt32 LE entry.length
-                    , Encode.unsignedInt32 LE offset
-                    ]
-                    :: result
-                )
-            )
-            ( initialOffset, [] )
+    let
+        ( finalOffset, reversedTable ) =
+            strings
+                |> List.foldl
+                    (\entry ( offset, result ) ->
+                        -- Note + 1 because NUL byte not included in length
+                        ( offset + entry.length + 1
+                        , Encode.sequence
+                            [ Encode.unsignedInt32 LE entry.length
+                            , Encode.unsignedInt32 LE offset
+                            ]
+                            :: result
+                        )
+                    )
+                    ( initialOffset, [] )
+    in
+    ( finalOffset, List.reverse reversedTable )
