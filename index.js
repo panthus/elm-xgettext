@@ -5,7 +5,7 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 const { parseArgs } = require('node:util');
 
-const app = Elm.XGetText.init();
+const app = Elm.Main.init();
 
 const options = {
     help: { short: 'h', long: 'help', type: 'boolean' },

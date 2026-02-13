@@ -1,6 +1,5 @@
-port module XGetText exposing (empty, main, parse, toPotFile)
+module XGetText exposing (Translations, empty, parse, toPotFile)
 
-import Base64
 import Dict exposing (Dict)
 import Elm.Parser
 import Elm.Syntax.Declaration as Decl
@@ -10,80 +9,6 @@ import Elm.Syntax.Import as Import
 import Elm.Syntax.Module as Module
 import Elm.Syntax.Node as Node
 import Json.Encode as Encode
-import MoEncoder
-import Parser
-import Platform
-import Platform.Cmd as Cmd
-import PoParser
-
-
-port logError : String -> Cmd msg
-
-
-port saveFile : { outputPath : String, content : String, encoding : String } -> Cmd msg
-
-
-port generatePotFile : ({ outputPath : String } -> msg) -> Sub msg
-
-
-port parseElmFile : ({ content : String } -> msg) -> Sub msg
-
-
-port parsePoFile : ({ content : String, outputPath : String } -> msg) -> Sub msg
-
-
-type Msg
-    = ParseElmFile { content : String }
-    | ParsePoFile { content : String, outputPath : String }
-    | GeneratePotFile { outputPath : String }
-
-
-main : Program () Translations Msg
-main =
-    Platform.worker { init = init, update = update, subscriptions = subscriptions }
-
-
-init : flags -> ( Translations, Cmd Msg )
-init _ =
-    ( empty, Cmd.none )
-
-
-update : Msg -> Translations -> ( Translations, Cmd Msg )
-update msg model =
-    case msg of
-        ParseElmFile { content } ->
-            case parse content model of
-                Ok translations ->
-                    ( translations, Cmd.none )
-
-                Err error ->
-                    ( model, logError error )
-
-        ParsePoFile { content, outputPath } ->
-            case Parser.run PoParser.parser content of
-                Ok entries ->
-                    ( model
-                    , saveFile
-                        { outputPath = outputPath
-                        , content =
-                            entries
-                                |> MoEncoder.encode
-                                |> Base64.fromBytes
-                                |> Maybe.withDefault ""
-                        , encoding = "base64"
-                        }
-                    )
-
-                Err error ->
-                    ( model, "Failed to parse PO file: " ++ Parser.deadEndsToString error |> logError )
-
-        GeneratePotFile { outputPath } ->
-            ( model, saveFile { content = toPotFile model, encoding = "utf8", outputPath = outputPath } )
-
-
-subscriptions : Translations -> Sub Msg
-subscriptions _ =
-    Sub.batch [ parseElmFile ParseElmFile, parsePoFile ParsePoFile, generatePotFile GeneratePotFile ]
 
 
 parse : String -> Translations -> Result String Translations

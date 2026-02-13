@@ -8,7 +8,7 @@
   },
   "files": ["dist", "index.js"],
   "scripts": {
-    "build": "elm make --optimize src/XGetText.elm --output dist/xgettext.js",
+    "build": "elm make --optimize src/Main.elm --output dist/xgettext.js",
     "test": "elm-test-rs"
   },
   "devDependencies": {
