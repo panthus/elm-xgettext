@@ -4,6 +4,7 @@ const { Elm } = require('./dist/xgettext.js');
 const fs = require('node:fs/promises');
 const path = require('node:path');
 const { parseArgs } = require('node:util');
+const packageJson = require('./package.json');
 
 const app = Elm.Main.init();
 
@@ -25,7 +26,9 @@ try {
 }
 
 if (values.help || positionals.length === 0) {
-    console.log(`Usage:
+    console.log(`Version: ${packageJson.version}
+
+Usage:
 \telm-xgettext [FILE] [OPTIONS]
 
 Dependening on the input file type, this tool can be used in two ways:
