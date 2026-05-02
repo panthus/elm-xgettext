@@ -35,7 +35,19 @@ msgctxt ""
 msgid "First "
 "Second"
 msgstr "Eerste "
-"Tweede\""""
+"Tweede"
+
+msgid "Line1\\nLine2"
+msgstr "Lijn1\\nLijn2"
+
+msgid "Tab\\tthere"
+msgstr "Tab\\tdaar"
+
+msgid "Quote\\"here"
+msgstr "Citaat\\"hier"
+
+msgid "Back\\slash"
+msgstr "Achter\\streep\""""
 
 
 poResult : List PoParser.PoEntry
@@ -69,6 +81,30 @@ poResult =
       , pluralText = Nothing
       , text = "First Second"
       , translations = Array.fromList [ "Eerste Tweede" ]
+      }
+    , { comments = []
+      , context = Nothing
+      , pluralText = Nothing
+      , text = "Line1\nLine2"
+      , translations = Array.fromList [ "Lijn1\nLijn2" ]
+      }
+    , { comments = []
+      , context = Nothing
+      , pluralText = Nothing
+      , text = "Tab\tthere"
+      , translations = Array.fromList [ "Tab\tdaar" ]
+      }
+    , { comments = []
+      , context = Nothing
+      , pluralText = Nothing
+      , text = "Quote\"here"
+      , translations = Array.fromList [ "Citaat\"hier" ]
+      }
+    , { comments = []
+      , context = Nothing
+      , pluralText = Nothing
+      , text = "Back\\slash"
+      , translations = Array.fromList [ "Achter\\streep" ]
       }
     ]
 

@@ -21,7 +21,7 @@ Create a POT file like this:
 npx elm-xgettext src/**/*.elm -o locale/FE.pot
 ```
 
-Convert PO files to a MO files like this:
+Convert PO files to MO files, it puts each MO file next to its original PO file:
 ```
 npx elm-xgettext locale/**/*.po
 ```

@@ -103,10 +103,12 @@ string =
                 Parser.oneOf
                     [ Parser.symbol "\\\""
                         |> Parser.map (\_ -> Parser.Loop (result ++ "\""))
+                    , Parser.symbol "\\n"
+                        |> Parser.map (\_ -> Parser.Loop (result ++ "\n"))
+                    , Parser.symbol "\\t"
+                        |> Parser.map (\_ -> Parser.Loop (result ++ "\t"))
                     , Parser.symbol "\""
                         |> Parser.map (\_ -> Parser.Done result)
-                    , Parser.symbol "\\\\"
-                        |> Parser.map (\_ -> Parser.Loop (result ++ "\\\\"))
                     , Parser.symbol "\\"
                         |> Parser.map (\_ -> Parser.Loop (result ++ "\\"))
                     , Parser.chompWhile (\char -> char /= '\\' && char /= '"')
