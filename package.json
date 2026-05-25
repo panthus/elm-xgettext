@@ -1,12 +1,15 @@
 {
   "name": "@panthus/elm-xgettext",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "license": "MIT",
   "type": "commonjs",
   "bin": {
     "elm-xgettext": "./index.js"
   },
-  "files": ["dist", "index.js"],
+  "files": [
+    "dist",
+    "index.js"
+  ],
   "scripts": {
     "build": "elm make --optimize src/Main.elm --output dist/xgettext.js",
     "test": "elm-test-rs"
