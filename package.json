@@ -1,6 +1,6 @@
 {
-  "name": "elm-xgettext",
-  "version": "1.0.0",
+  "name": "@panthus/elm-xgettext",
+  "version": "0.0.0",
   "license": "MIT",
   "type": "commonjs",
   "bin": {
