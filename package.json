@@ -10,6 +10,10 @@
     "dist",
     "index.js"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/panthus/elm-xgettext.git"
+  },
   "scripts": {
     "build": "elm make --optimize src/Main.elm --output dist/xgettext.js",
     "test": "elm-test-rs"
